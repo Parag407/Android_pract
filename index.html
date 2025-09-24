@@ -68,6 +68,9 @@
                         <li>
                             <a href="#gradle-file" class="block py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-200" onclick="showPractical('gradle-file')">build.gradle (Module: My_Application.app)</a>
                         </li>
+                        <li>
+                            <a href="#gradle-project-file" class="block py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-200" onclick="showPractical('gradle-project-file')">build.gradle (Project: MyApplication)</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="mb-2">
@@ -94,9 +97,23 @@
 
     <!-- Main Content Area -->
     <main class="flex-grow p-8 overflow-y-auto">
+        <div id="gradle-project-file" class="practical-content">
+            <h2 class="text-3xl font-bold mb-4 text-green-400">Gradle Configuration (Project)</h2>
+            <p class="mb-4">This block shows the build.gradle file configuration for the entire Android project.</p>
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400">File: build.gradle (Project: MyApplication)</h3>
+            <pre id="code-gradle-project">
+plugins {
+    id 'com.android.application' version '7.4.2' apply false
+    id 'com.android.library' version '7.4.2' apply false
+    id 'org.jetbrains.kotlin.android' version '1.8.0' apply false
+}
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-gradle-project')">Copy</button>
+        </div>
+
         <div id="gradle-file" class="practical-content active">
-            <h2 class="text-3xl font-bold mb-4 text-green-400">Gradle Configuration</h2>
-            <p class="mb-4">This block shows the build.gradle file configuration for the Android project.</p>
+            <h2 class="text-3xl font-bold mb-4 text-green-400">Gradle Configuration (Module)</h2>
+            <p class="mb-4">This block shows the build.gradle file configuration for the Android project's app module.</p>
             <h3 class="text-xl font-semibold mb-2 text-cyan-400">File: build.gradle (Module: My_Application.app)</h3>
             <pre id="code-gradle">
 plugins {
@@ -134,18 +151,18 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.5.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.10.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
             </pre>
             <button class="copy-button" onclick="copyCode('code-gradle')">Copy</button>
         </div>
-
+        
         <div id="practical-1" class="practical-content">
             <h2 class="text-3xl font-bold mb-4 text-green-400">Practical 1: Creating a Simple App</h2>
             <h3 class="text-xl font-semibold mb-2 text-cyan-400">Steps</h3>
@@ -661,7 +678,6 @@ public class SecondActivity extends AppCompatActivity {
         _second_iv_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Assuming you have 'flower.jpg' and 'sunrise.jpeg' in your drawable folder
                 _second_iv_image.setImageResource(R.drawable.sunrise);
             }
         });
@@ -842,6 +858,75 @@ public class SecondActivity extends AppCompatActivity {
 &lt;/LinearLayout>
             </pre>
             <button class="copy-button" onclick="copyCode('code-8-1')">Copy</button>
+
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400 mt-6">File: SecondActivity.java (Updated)</h3>
+            <pre id="code-8-2">
+package com.example.myapplication;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class SecondActivity extends AppCompatActivity {
+    TextView _second_tv_username;
+    String username;
+    ImageView _second_iv_image;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_second);
+
+        _second_tv_username = findViewById(R.id.second_tv_username);
+        _second_iv_image = findViewById(R.id.second_iv_image);
+
+        Intent i = getIntent();
+        Bundle b = i.getExtras();
+
+        if (b != null && b.containsKey("isLoggedIn")) {
+            if (b.getString("isLoggedIn").equals("1")) {
+                username = b.getString("username", "");
+                _second_tv_username.setText("Welcome, " + username);
+            }
+        }
+        
+        _second_iv_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                _second_iv_image.setImageResource(R.drawable.sunrise);
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.basic_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.menu_home) {
+            Toast.makeText(this, "Home Menu Item Clicked", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menu_about) {
+            Toast.makeText(this, "About Menu Item Clicked", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menu_contact) {
+            Toast.makeText(this, "Contact Menu Item Clicked", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menu_gallery) {
+            Toast.makeText(this, "Gallery Menu Item Clicked", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menu_logout) {
+            Toast.makeText(this, "Logout Menu Item Clicked", Toast.LENGTH_SHORT).show();
+        }
+        return true;
+    }
+}
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-8-2')">Copy</button>
         </div>
 
         <div id="practical-9" class="practical-content">
@@ -1218,4 +1303,3 @@ public class SecondActivity extends AppCompatActivity {
 
 </body>
 </html>
-
