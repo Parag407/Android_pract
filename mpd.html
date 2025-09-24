@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android Practical Journal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+        }
+        .practical-content {
+            display: none;
+        }
+        .practical-content.active {
+            display: block;
+        }
+        pre {
+            background-color: #2d2d2d;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #4a4a4a;
+        }
+        .copy-button {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            padding: 0.25rem 0.5rem;
+            background-color: #4a5568;
+            color: #ffffff;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: background-color 0.2s;
+        }
+        .copy-button:hover {
+            background-color: #2d3748;
+        }
+        .copy-button:active {
+            background-color: #1a202c;
+        }
+        .dropdown-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body class="flex min-h-screen">
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-72 bg-gray-900 text-white p-6 shadow-lg flex-shrink-0 border-r border-gray-700">
+        <h1 class="text-3xl font-bold mb-8 text-center text-green-400">Android Journal</h1>
+        <nav>
+            <ul id="nav-list" class="space-y-4">
+                <li class="mb-2">
+                    <button class="dropdown-button w-full text-left py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-200" onclick="toggleDropdown('gradle-config-dropdown')">
+                        <span>Gradle Configuration</span>
+                        <span id="gradle-config-arrow">▼</span>
+                    </button>
+                    <ul id="gradle-config-dropdown" class="pl-4 mt-2 hidden space-y-2">
+                        <li>
+                            <a href="#gradle-file" class="block py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-200" onclick="showPractical('gradle-file')">build.gradle (Module: My_Application.app)</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="mb-2">
+                    <button class="dropdown-button w-full text-left py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-200" onclick="toggleDropdown('practicals-dropdown')">
+                        <span>Practicals Index</span>
+                        <span id="practicals-arrow">▼</span>
+                    </button>
+                    <ul id="practicals-dropdown" class="pl-4 mt-2 hidden space-y-2">
+                        <li><a href="#practical-1" class="block py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-200" onclick="showPractical('practical-1')">1: Creating a Simple App</a></li>
+                        <li><a href="#practical-2" class="block py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-200" onclick="showPractical('practical-2')">2: Lifecycle of an Android Activity</a></li>
+                        <li><a href="#practical-3" class="block py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-200" onclick="showPractical('practical-3')">3: Themes in Android Activity</a></li>
+                        <li><a href="#practical-4" class="block py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-200" onclick="showPractical('practical-4')">4: Login Form (Relative Layout)</a></li>
+                        <li><a href="#practical-5" class="block py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-200" onclick="showPractical('practical-5')">5: Go from One Activity to Another</a></li>
+                        <li><a href="#practical-6" class="block py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-200" onclick="showPractical('practical-6')">6: How to Add Image</a></li>
+                        <li><a href="#practical-7" class="block py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-200" onclick="showPractical('practical-7')">7: How to Add Basic Menu</a></li>
+                        <li><a href="#practical-8" class="block py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-200" onclick="showPractical('practical-8')">8: Implement use of Linear Layout</a></li>
+                        <li><a href="#practical-9" class="block py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-200" onclick="showPractical('practical-9')">9: Implement use of SharedPreferences</a></li>
+                        <li><a href="#practical-10" class="block py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-200" onclick="showPractical('practical-10')">10: Different Orientation Screens</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow p-8 overflow-y-auto">
+        <div id="gradle-file" class="practical-content active">
+            <h2 class="text-3xl font-bold mb-4 text-green-400">Gradle Configuration</h2>
+            <p class="mb-4">This block shows the build.gradle file configuration for the Android project.</p>
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400">File: build.gradle (Module: My_Application.app)</h3>
+            <pre id="code-gradle">
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.example.myapplication'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.example.myapplication"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-gradle')">Copy</button>
+        </div>
+
+        <div id="practical-1" class="practical-content">
+            <h2 class="text-3xl font-bold mb-4 text-green-400">Practical 1: Creating a Simple App</h2>
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400">Steps</h3>
+            <ol class="list-decimal list-inside space-y-2 mb-6">
+                <li>Open Android Studio and click on "New Project".</li>
+                <li>Select "Phone & Tablet" and choose "Empty Views Activity". Click "Next".</li>
+                <li>Fill in the appropriate details for your app name, package name, save location, language (Java), and minimum SDK. Click "Finish".</li>
+                <li>Once the project has successfully compiled, from the left-side dropdown, select "Android".</li>
+            </ol>
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400">File: activity_main.xml</h3>
+            <pre id="code-1-1">
+&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    &lt;TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+&lt;/androidx.constraintlayout.widget.ConstraintLayout>
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-1-1')">Copy</button>
+
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400 mt-6">File: MainActivity.java</h3>
+            <pre id="code-1-2">
+package com.example.myapplication;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+}
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-1-2')">Copy</button>
+        </div>
+
+        <div id="practical-2" class="practical-content">
+            <h2 class="text-3xl font-bold mb-4 text-green-400">Practical 2: Lifecycle of an Android Activity</h2>
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400">Steps</h3>
+            <ol class="list-decimal list-inside space-y-2 mb-6">
+                <li>Right-click in the `MainActivity.java` file after the `onCreate()` method.</li>
+                <li>Select "Generate" and then "Override Methods".</li>
+                <li>Select the methods of the Android Lifecycle Activity (`onStart`, `onStop`, `onPause`, etc.) and click "OK" to proceed.</li>
+                <li>After the methods are added, add a `Toast` message to each of them to show when the method is called.</li>
+            </ol>
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400">File: MainActivity.java</h3>
+            <pre id="code-2-1">
+package com.example.myapplication;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Toast.makeText(this, "onCreate() method called", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Toast.makeText(this, "onStart() method called", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Toast.makeText(this, "onResume() method called", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Toast.makeText(this, "onPause() method called", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Toast.makeText(this, "onStop() method called", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Toast.makeText(this, "onRestart() method called", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Toast.makeText(this, "onDestroy() method called", Toast.LENGTH_SHORT).show();
+    }
+}
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-2-1')">Copy</button>
+        </div>
+
+        <div id="practical-3" class="practical-content">
+            <h2 class="text-3xl font-bold mb-4 text-green-400">Practical 3: Themes in Android Activity</h2>
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400">Steps</h3>
+            <ol class="list-decimal list-inside space-y-2 mb-6">
+                <li>Go to `res > values > themes > themes.xml` and `themes.xml (night)` files.</li>
+                <li>Add the provided `style` code to both files.</li>
+                <li>Navigate to `manifests > AndroidManifest.xml` and add the `android:theme` attribute to your `activity` tag.</li>
+            </ol>
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400">File: themes.xml</h3>
+            <pre id="code-3-1">
+&lt;style name="appBar" parent="Theme.AppCompat.Light.DarkActionBar">
+    &lt;item name="colorPrimary">@android:color/holo_green_light&lt;/item>
+    &lt;item name="titleTextColor">@android:color/holo_red_dark&lt;/item>
+    &lt;item name="subtitle">Sub Title&lt;/item>
+&lt;/style>
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-3-1')">Copy</button>
+
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400 mt-6">File: themes.xml (Night)</h3>
+            <pre id="code-3-2">
+&lt;style name="appBar" parent="Theme.AppCompat.Light.DarkActionBar">
+    &lt;item name="colorPrimary">@android:color/white&lt;/item>
+    &lt;item name="title">Practical&lt;/item>
+    &lt;item name="titleTextColor">@android:color/black&lt;/item>
+&lt;/style>
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-3-2')">Copy</button>
+
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400 mt-6">File: AndroidManifest.xml</h3>
+            <pre id="code-3-3">
+&lt;activity
+    android:name=".MainActivity"
+    android:theme="@style/appBar"
+    android:label="Login"
+    android:exported="true">
+    &lt;intent-filter>
+        &lt;action android:name="android.intent.action.MAIN" />
+        &lt;category android:name="android.intent.category.LAUNCHER" />
+    &lt;/intent-filter>
+&lt;/activity>
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-3-3')">Copy</button>
+        </div>
+
+        <div id="practical-4" class="practical-content">
+            <h2 class="text-3xl font-bold mb-4 text-green-400">Practical 4: Login Form using Relative Layout</h2>
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400">Steps</h3>
+            <ol class="list-decimal list-inside space-y-2 mb-6">
+                <li>Go to `res > layout > activity_main.xml` and replace the existing code with the RelativeLayout code.</li>
+                <li>Update the `MainActivity.java` code to include `EditText`, `Button`, and `Toast` to handle user input and validation.</li>
+            </ol>
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400">File: activity_main.xml</h3>
+            <pre id="code-4-1">
+&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    &lt;TextView
+        android:id="@+id/main_tv_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="Login"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black" />
+
+    &lt;EditText
+        android:id="@+id/main_et_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Username"
+        android:textColorHint="@android:color/black"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@id/main_tv_heading"
+        android:inputType="text" />
+
+    &lt;EditText
+        android:id="@+id/main_et_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Password"
+        android:textColorHint="@android:color/black"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@id/main_et_username"
+        android:inputType="textPassword" />
+
+    &lt;Button
+        android:id="@+id/main_btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:layout_below="@id/main_et_password"
+        android:layout_centerHorizontal="true" />
+
+    &lt;TextView
+        android:id="@+id/main_tv_error_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/main_btn_login"
+        android:padding="10dp"
+        android:layout_margin="10dp" />
+
+&lt;/RelativeLayout>
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-4-1')">Copy</button>
+
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400 mt-6">File: MainActivity.java</h3>
+            <pre id="code-4-2">
+package com.example.myapplication;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+    EditText _username, _password;
+    Button _btnSubmitLogin;
+    String username, password;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        _username = findViewById(R.id.main_et_username);
+        _password = findViewById(R.id.main_et_password);
+        _btnSubmitLogin = findViewById(R.id.main_btn_login);
+
+        _btnSubmitLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                username = _username.getText().toString().trim();
+                password = _password.getText().toString().trim();
+
+                if (username.isEmpty()) {
+                    _username.setError("Please enter Username");
+                    _username.requestFocus();
+                } else if (password.isEmpty()) {
+                    _password.setError("Password cannot be blank");
+                    _password.requestFocus();
+                } else if (password.length() < 8) {
+                    _password.setError("Password should be greater than 8 characters");
+                    _password.requestFocus();
+                } else {
+                    if (username.equals("admin") && password.equals("password@1234")) {
+                        Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "Failed to Login, Invalid Credentials", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+    }
+}
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-4-2')">Copy</button>
+        </div>
+
+        <div id="practical-5" class="practical-content">
+            <h2 class="text-3xl font-bold mb-4 text-green-400">Practical 5: Go from One Activity to Another</h2>
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400">Steps</h3>
+            <ol class="list-decimal list-inside space-y-2 mb-6">
+                <li>Create a new `Empty Views Activity` by right-clicking on the Java folder, and selecting `New > Activity > Empty Views Activity`. Name it `SecondActivity`.</li>
+                <li>Add an `Intent` code to `MainActivity.java` to navigate to `SecondActivity` upon successful login. Use `putExtra` to pass the username and a login status.</li>
+                <li>In `activity_second.xml`, create a `LinearLayout` with a `TextView` to display the Dashboard heading and another to display the logged-in username.</li>
+                <li>In `SecondActivity.java`, retrieve the `Intent` data from `MainActivity` using `getIntent()` and `getExtras()`. Then set the text of the `TextView` with the retrieved username.</li>
+            </ol>
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400">File: MainActivity.java (Updated)</h3>
+            <pre id="code-5-1">
+package com.example.myapplication;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+    EditText _username, _password;
+    Button _btnSubmitLogin;
+    String username, password;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        _username = findViewById(R.id.main_et_username);
+        _password = findViewById(R.id.main_et_password);
+        _btnSubmitLogin = findViewById(R.id.main_btn_login);
+
+        _btnSubmitLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                username = _username.getText().toString().trim();
+                password = _password.getText().toString().trim();
+
+                if (username.isEmpty()) {
+                    _username.setError("Please enter Username");
+                    _username.requestFocus();
+                } else if (password.isEmpty()) {
+                    _password.setError("Password cannot be blank");
+                    _password.requestFocus();
+                } else if (password.length() < 8) {
+                    _password.setError("Password should be greater than 8 characters");
+                    _password.requestFocus();
+                } else {
+                    if (username.equals("admin") && password.equals("password@1234")) {
+                        Intent i = new Intent(MainActivity.this, SecondActivity.class);
+                        i.putExtra("username", username);
+                        i.putExtra("isLoggedIn", "1");
+                        startActivity(i);
+                        finish();
+                        Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "Failed to Login, Invalid Credentials", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+    }
+}
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-5-1')">Copy</button>
+
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400 mt-6">File: activity_second.xml</h3>
+            <pre id="code-5-2">
+&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SecondActivity"
+    android:orientation="vertical">
+
+    &lt;TextView
+        android:id="@+id/second_tv_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dashboard"
+        android:layout_margin="20dp"
+        android:padding="20dp" />
+
+    &lt;TextView
+        android:id="@+id/second_tv_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_margin="20dp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+&lt;/LinearLayout>
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-5-2')">Copy</button>
+
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400 mt-6">File: SecondActivity.java</h3>
+            <pre id="code-5-3">
+package com.example.myapplication;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class SecondActivity extends AppCompatActivity {
+    TextView _second_tv_username;
+    String username;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_second);
+
+        _second_tv_username = findViewById(R.id.second_tv_username);
+
+        Intent i = getIntent();
+        Bundle b = i.getExtras();
+
+        if (b != null && b.containsKey("isLoggedIn")) {
+            if (b.getString("isLoggedIn").equals("1")) {
+                username = b.getString("username", "");
+                _second_tv_username.setText("Welcome, " + username);
+            }
+        }
+    }
+}
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-5-3')">Copy</button>
+        </div>
+
+        <div id="practical-6" class="practical-content">
+            <h2 class="text-3xl font-bold mb-4 text-green-400">Practical 6: How to Add Image in an Android Activity</h2>
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400">Steps</h3>
+            <ol class="list-decimal list-inside space-y-2 mb-6">
+                <li>Download two images and save them to your computer.</li>
+                <li>Copy and paste both images into the `drawable` folder of your Android project.</li>
+                <li>In `activity_second.xml`, add an `ImageView` with a source pointing to one of the images.</li>
+                <li>In `SecondActivity.java`, add code to get a reference to the `ImageView` and set an `OnClickListener` to change the image when it's clicked.</li>
+            </ol>
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400">File: activity_second.xml (Updated)</h3>
+            <pre id="code-6-1">
+&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SecondActivity"
+    android:orientation="vertical">
+
+    &lt;TextView
+        android:id="@+id/second_tv_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dashboard"
+        android:layout_margin="20dp"
+        android:padding="20dp" />
+
+    &lt;TextView
+        android:id="@+id/second_tv_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_margin="20dp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    &lt;ImageView
+        android:id="@+id/second_iv_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/flower" />
+
+&lt;/LinearLayout>
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-6-1')">Copy</button>
+
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400 mt-6">File: SecondActivity.java (Updated)</h3>
+            <pre id="code-6-2">
+package com.example.myapplication;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class SecondActivity extends AppCompatActivity {
+    TextView _second_tv_username;
+    String username;
+    ImageView _second_iv_image;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_second);
+
+        _second_tv_username = findViewById(R.id.second_tv_username);
+        _second_iv_image = findViewById(R.id.second_iv_image);
+
+        Intent i = getIntent();
+        Bundle b = i.getExtras();
+
+        if (b != null && b.containsKey("isLoggedIn")) {
+            if (b.getString("isLoggedIn").equals("1")) {
+                username = b.getString("username", "");
+                _second_tv_username.setText("Welcome, " + username);
+            }
+        }
+        
+        _second_iv_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Assuming you have 'flower.jpg' and 'sunrise.jpeg' in your drawable folder
+                _second_iv_image.setImageResource(R.drawable.sunrise);
+            }
+        });
+    }
+}
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-6-2')">Copy</button>
+        </div>
+
+        <div id="practical-7" class="practical-content">
+            <h2 class="text-3xl font-bold mb-4 text-green-400">Practical 7: How to Add a Basic Menu</h2>
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400">Steps</h3>
+            <ol class="list-decimal list-inside space-y-2 mb-6">
+                <li>Add the `appBar` theme to your `SecondActivity` in `AndroidManifest.xml`.</li>
+                <li>Create a new `menu` folder inside the `res` directory: `Right Click on Res Directory > New > Android Resource Directory` and select `Resource Type` as `menu`.</li>
+                <li>Right-click on the new `menu` folder and select `New > Menu Resource File`. Name it `basic_menu.xml`.</li>
+                <li>Add menu items to `basic_menu.xml`.</li>
+                <li>In `SecondActivity.java`, override `onCreateOptionsMenu` to inflate the menu resource and `onOptionsItemSelected` to handle menu item clicks.</li>
+            </ol>
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400">File: AndroidManifest.xml (Updated)</h3>
+            <pre id="code-7-1">
+&lt;activity
+    android:name=".SecondActivity"
+    android:label="Second Activity"
+    android:theme="@style/appBar"
+    android:exported="true" />
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-7-1')">Copy</button>
+
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400 mt-6">File: basic_menu.xml</h3>
+            <pre id="code-7-2">
+&lt;menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    &lt;item
+        android:id="@+id/menu_home"
+        android:title="Home" />
+    &lt;item
+        android:id="@+id/menu_gallery"
+        android:title="Gallery" />
+    &lt;item
+        android:id="@+id/menu_about"
+        android:title="About Us" />
+    &lt;item
+        android:id="@+id/menu_contact"
+        android:title="Contact" />
+    &lt;item
+        android:id="@+id/menu_logout"
+        android:title="Logout"
+        app:showAsAction="ifRoom" />
+&lt;/menu>
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-7-2')">Copy</button>
+
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400 mt-6">File: SecondActivity.java (Updated)</h3>
+            <pre id="code-7-3">
+package com.example.myapplication;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class SecondActivity extends AppCompatActivity {
+    TextView _second_tv_username;
+    String username;
+    ImageView _second_iv_image;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_second);
+
+        _second_tv_username = findViewById(R.id.second_tv_username);
+        _second_iv_image = findViewById(R.id.second_iv_image);
+
+        Intent i = getIntent();
+        Bundle b = i.getExtras();
+
+        if (b != null && b.containsKey("isLoggedIn")) {
+            if (b.getString("isLoggedIn").equals("1")) {
+                username = b.getString("username", "");
+                _second_tv_username.setText("Welcome, " + username);
+            }
+        }
+
+        _second_iv_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                _second_iv_image.setImageResource(R.drawable.sunrise);
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.basic_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.menu_home) {
+            Toast.makeText(this, "Home Menu Item Clicked", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menu_about) {
+            Toast.makeText(this, "About Menu Item Clicked", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menu_contact) {
+            Toast.makeText(this, "Contact Menu Item Clicked", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menu_gallery) {
+            Toast.makeText(this, "Gallery Menu Item Clicked", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menu_logout) {
+            Toast.makeText(this, "Logout Menu Item Clicked", Toast.LENGTH_SHORT).show();
+        }
+        return true;
+    }
+}
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-7-3')">Copy</button>
+        </div>
+
+        <div id="practical-8" class="practical-content">
+            <h2 class="text-3xl font-bold mb-4 text-green-400">Practical 8: Implement use of Linear Layout</h2>
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400">Steps</h3>
+            <ol class="list-decimal list-inside space-y-2 mb-6">
+                <li>Go to the `activity_second.xml` file. The layout for this practical is already a `LinearLayout`.</li>
+                <li>Add a `Button` for a "Logout" action. Note the use of `android:layout_gravity="center"` to center the button within the vertical layout.</li>
+            </ol>
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400">File: activity_second.xml (Updated)</h3>
+            <pre id="code-8-1">
+&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SecondActivity"
+    android:orientation="vertical">
+
+    &lt;TextView
+        android:id="@+id/second_tv_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dashboard"
+        android:layout_margin="20dp"
+        android:padding="20dp" />
+
+    &lt;TextView
+        android:id="@+id/second_tv_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_margin="20dp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    &lt;Button
+        android:id="@+id/second_btn_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:layout_margin="10dp"
+        android:layout_gravity="center" />
+
+    &lt;ImageView
+        android:id="@+id/second_iv_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/flower" />
+
+&lt;/LinearLayout>
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-8-1')">Copy</button>
+        </div>
+
+        <div id="practical-9" class="practical-content">
+            <h2 class="text-3xl font-bold mb-4 text-green-400">Practical 9: Implement use of SharedPreferences</h2>
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400">Steps</h3>
+            <ol class="list-decimal list-inside space-y-2 mb-6">
+                <li>In `MainActivity.java`, declare a `SharedPreferences` object. Check if a username is already saved in `SharedPreferences`. If it is, redirect the user to `SecondActivity` to maintain a logged-in session.</li>
+                <li>When the user logs in, remove the `Intent` code and save the username to `SharedPreferences` using an `Editor`.</li>
+                <li>In `SecondActivity.java`, retrieve the username from `SharedPreferences` to display it on the dashboard.</li>
+                <li>Implement the logout functionality. When the "Logout" menu item is clicked, clear the `SharedPreferences` and redirect the user back to `MainActivity`.</li>
+            </ol>
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400">File: MainActivity.java (Updated)</h3>
+            <pre id="code-9-1">
+package com.example.myapplication;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+    EditText _username, _password;
+    Button _btnSubmitLogin;
+    String username, password;
+    SharedPreferences sharedPreferences;
+    public static final String myPrefs = "myPrefs";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        sharedPreferences = getSharedPreferences(myPrefs, Context.MODE_PRIVATE);
+        if (sharedPreferences.contains("username")) {
+            Intent i = new Intent(MainActivity.this, SecondActivity.class);
+            startActivity(i);
+            finish();
+        }
+
+        _username = findViewById(R.id.main_et_username);
+        _password = findViewById(R.id.main_et_password);
+        _btnSubmitLogin = findViewById(R.id.main_btn_login);
+
+        _btnSubmitLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                username = _username.getText().toString().trim();
+                password = _password.getText().toString().trim();
+
+                if (username.isEmpty()) {
+                    _username.setError("Please enter Username");
+                    _username.requestFocus();
+                } else if (password.isEmpty()) {
+                    _password.setError("Password cannot be blank");
+                    _password.requestFocus();
+                } else if (password.length() < 8) {
+                    _password.setError("Password should be greater than 8 characters");
+                    _password.requestFocus();
+                } else {
+                    if (username.equals("admin") && password.equals("password@1234")) {
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("username", username);
+                        editor.apply();
+                        
+                        Intent i = new Intent(MainActivity.this, SecondActivity.class);
+                        startActivity(i);
+                        finish();
+                        Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "Failed to Login, Invalid Credentials", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+    }
+}
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-9-1')">Copy</button>
+
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400 mt-6">File: SecondActivity.java (Updated)</h3>
+            <pre id="code-9-2">
+package com.example.myapplication;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class SecondActivity extends AppCompatActivity {
+    TextView _second_tv_username;
+    String username;
+    ImageView _second_iv_image;
+    SharedPreferences sharedPreferences;
+    public static final String myPrefs = "myPrefs";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_second);
+
+        _second_tv_username = findViewById(R.id.second_tv_username);
+        _second_iv_image = findViewById(R.id.second_iv_image);
+        sharedPreferences = getSharedPreferences(myPrefs, Context.MODE_PRIVATE);
+
+        if (sharedPreferences.contains("username")) {
+            username = sharedPreferences.getString("username", "");
+            if (!username.isEmpty()) {
+                _second_tv_username.setText("Welcome, " + username);
+            }
+        } else {
+            // No saved session, redirect to login
+            Intent i = new Intent(SecondActivity.this, MainActivity.class);
+            startActivity(i);
+            finish();
+        }
+
+        _second_iv_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                _second_iv_image.setImageResource(R.drawable.sunrise);
+            }
+        });
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.basic_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.menu_home) {
+            Toast.makeText(this, "Home Menu Item Clicked", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menu_about) {
+            Toast.makeText(this, "About Menu Item Clicked", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menu_contact) {
+            Toast.makeText(this, "Contact Menu Item Clicked", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menu_gallery) {
+            Toast.makeText(this, "Gallery Menu Item Clicked", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menu_logout) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.remove("username");
+            editor.apply();
+            
+            Intent i = new Intent(SecondActivity.this, MainActivity.class);
+            startActivity(i);
+            finish();
+            Toast.makeText(this, "Logout Menu Item Clicked", Toast.LENGTH_SHORT).show();
+        }
+        return true;
+    }
+}
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-9-2')">Copy</button>
+        </div>
+
+        <div id="practical-10" class="practical-content">
+            <h2 class="text-3xl font-bold mb-4 text-green-400">Practical 10: Different Orientation Screens</h2>
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400">Steps</h3>
+            <ol class="list-decimal list-inside space-y-2 mb-6">
+                <li>In `AndroidManifest.xml`, add the `android:screenOrientation` attribute to an `activity` to lock its orientation.</li>
+                <li>In Android Studio, you can create a landscape-specific layout file. Navigate to `activity_main.xml` and click on the file name in the preview pane. Select `Create Landscape Qualifier`.</li>
+                <li>In the newly created `activity_main.xml (land)` file, modify the layout to have a different design for landscape mode, for example, changing the "Login" text to "Register".</li>
+            </ol>
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400">File: AndroidManifest.xml (Updated)</h3>
+            <pre id="code-10-1">
+&lt;activity
+    android:name=".SecondActivity"
+    android:label="Second Activity"
+    android:theme="@style/appBar"
+    android:screenOrientation="portrait"
+    android:exported="true" />
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-10-1')">Copy</button>
+
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400 mt-6">File: activity_main.xml (land)</h3>
+            <pre id="code-10-2">
+&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    &lt;TextView
+        android:id="@+id/main_tv_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="Register"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black" />
+
+    &lt;EditText
+        android:id="@+id/main_et_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Username"
+        android:textColorHint="@android:color/black"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@id/main_tv_heading"
+        android:inputType="text" />
+
+    &lt;EditText
+        android:id="@+id/main_et_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Password"
+        android:textColorHint="@android:color/black"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@id/main_et_username"
+        android:inputType="textPassword" />
+
+    &lt;Button
+        android:id="@+id/main_btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:layout_below="@id/main_et_password"
+        android:layout_centerHorizontal="true" />
+
+    &lt;TextView
+        android:id="@+id/main_tv_error_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/main_btn_login"
+        android:padding="10dp"
+        android:layout_margin="10dp" />
+
+&lt;/RelativeLayout>
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-10-2')">Copy</button>
+        </div>
+
+        <div id="practical-11" class="practical-content">
+            <h2 class="text-3xl font-bold mb-4 text-green-400">Android Manifest File</h2>
+            <h3 class="text-xl font-semibold mb-2 text-cyan-400">File: AndroidManifest.xml</h3>
+            <pre id="code-11-1">
+&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    &lt;uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+
+    &lt;uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/>
+
+    &lt;uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    &lt;application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/loco_round"
+        android:label="Loco"
+        android:roundIcon="@mipmap/loco_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.ParagApp"
+        tools:targetApi="31">
+
+        &lt;service android:name=".MusicService"
+            android:foregroundServiceType="mediaPlayback"
+            android:enabled="true"
+            android:exported="false" />
+        &lt;activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+        &lt;activity
+            android:name=".PlayerActivity"
+            android:exported="false" />
+        &lt;activity
+            android:name=".SearchActivity"
+            android:exported="false" />
+        &lt;activity
+            android:name=".MainActivity"
+            android:exported="true">
+            &lt;intent-filter>
+                &lt;action android:name="android.intent.action.MAIN" />
+                &lt;category android:name="android.intent.category.LAUNCHER" />
+            &lt;/intent-filter>
+        &lt;/activity>
+    &lt;/application>
+&lt;/manifest>
+            </pre>
+            <button class="copy-button" onclick="copyCode('code-11-1')">Copy</button>
+        </div>
+    </main>
+
+    <script>
+        // Function to toggle dropdown visibility and arrow direction
+        function toggleDropdown(dropdownId) {
+            const dropdown = document.getElementById(dropdownId);
+            const arrow = document.getElementById(dropdownId.replace('-dropdown', '-arrow'));
+            dropdown.classList.toggle('hidden');
+            if (dropdown.classList.contains('hidden')) {
+                arrow.textContent = '▼';
+            } else {
+                arrow.textContent = '▲';
+            }
+        }
+
+        // Function to show a specific practical section and hide others
+        function showPractical(practicalId) {
+            const practicals = document.querySelectorAll('.practical-content');
+            practicals.forEach(practical => {
+                practical.classList.remove('active');
+            });
+            document.getElementById(practicalId).classList.add('active');
+        }
+
+        // Function to copy code to clipboard
+        function copyCode(codeId) {
+            const codeBlock = document.getElementById(codeId);
+            const textToCopy = codeBlock.textContent;
+            
+            // Create a temporary textarea element to hold the text
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = textToCopy;
+            document.body.appendChild(tempTextArea);
+            
+            // Select and copy the text
+            tempTextArea.select();
+            document.execCommand('copy');
+            
+            // Remove the temporary element
+            document.body.removeChild(tempTextArea);
+            
+            // Optional: Provide visual feedback to the user
+            const button = codeBlock.nextElementSibling;
+            const originalText = button.textContent;
+            button.textContent = 'Copied!';
+            setTimeout(() => {
+                button.textContent = originalText;
+            }, 2000);
+        }
+
+        // Show the gradle configuration by default
+        document.addEventListener('DOMContentLoaded', () => {
+            showPractical('gradle-file');
+            toggleDropdown('gradle-config-dropdown');
+        });
+    </script>
+
+</body>
+</html>
